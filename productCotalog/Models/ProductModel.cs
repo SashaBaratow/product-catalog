@@ -33,4 +33,19 @@ namespace productCotalog.Models
         public string DisplayName { get; init; } = string.Empty;
         object IDropdownOptions.Value => Value;
     }
+
+    public enum PriceModelEnum
+    {
+        [System.ComponentModel.DataAnnotations.Display(Name = "Ценв по возрастанию")]
+        ASC,
+        [System.ComponentModel.DataAnnotations.Display(Name = "Цена по убыванию")]
+        DESC
+    }
+    public class PriceModel : IDropdownOptions
+    {
+        public PriceModelEnum Value { get; init; }
+        public string? DisplayName { get; init; }
+
+        object IDropdownOptions.Value => Value;
+    }
 }
