@@ -1,0 +1,32 @@
+﻿<header class="header">
+<nav class="d-flex relative justify-content-between align-items-center container">
+    <input type="checkbox" class="burger-menu" />
+    <p class="header-logo">
+        <NavLink href="">Logo</NavLink>
+    </p>
+    <ul class="nav-list">
+        @foreach (var item in navMenuItems)
+        {
+            <li class="nav-item">
+                <NavLink class="nav-link" href="@item.path">@item.label</NavLink>
+            </li>
+        }
+    </ul>
+</nav>
+</header>
+
+@code{
+    private class NavMenuItem
+    {
+        public string? path { get; set; }
+        public int? id { get; set; }
+        public string? label { get; set; }
+    }
+
+    private NavMenuItem[] navMenuItems = [
+         new NavMenuItem { id = 1, path = "", label = "Home" },
+         new NavMenuItem { id = 2, path = "products", label = "Products" },
+         new NavMenuItem { id = 3, path = "about", label = "Cart"  }
+    ];
+
+}
