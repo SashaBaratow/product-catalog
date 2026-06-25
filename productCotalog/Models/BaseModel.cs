@@ -1,4 +1,6 @@
-﻿namespace productCotalog.Models
+﻿using productCotalog.Interfaces;
+
+namespace productCotalog.Models
 {
     public enum SortModelEnum
     { 
@@ -6,8 +8,11 @@
         ASC, 
         DESC
     }
-    public class SortModel{
-        public SortModelEnum Value;
-        public string? DisplayName;
+    public class SortModel : IDropdownOptions
+    {
+        public SortModelEnum Value { get; }
+        public string? DisplayName { get; }
+
+        object IDropdownOptions.Value => Value;
     }
 }
