@@ -44,7 +44,7 @@ namespace productCotalog.Services
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
                 query = query.Where(p =>
-                    p.Name.Contains(searchTerm));
+                    p.Name.ToLower().Contains(searchTerm.ToLower()));
             }
 
             if (category != null)

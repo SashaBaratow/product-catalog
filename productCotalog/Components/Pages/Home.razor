@@ -1,15 +1,18 @@
 ﻿@page "/"
 @using productCotalog.Components.Shared
 @using productCotalog.Services
+@using productCotalog.Store
 @using productCotalog.Models
 @using productCotalog.Interfaces
 @inject ProductService ProductService
+@rendermode InteractiveServer
 
 <PageTitle>Products</PageTitle>
 
 <div>
     <div class="d-flex align-items-start" style="gap: clamp(0.5rem,2vw,2rem);">
-        <SearchInput />
+        <SearchInput OnSearch="HandleSearch" Value="@configList.SearchTerm" />
+        <Select Options="@PriceSortOrders" SelectedLabel="Все" />
         <Select Options="@Categories" SelectedLabel="Все категории" />
    </div>
     <div class="row row-cols-4 gap-4 justify-content-center">
@@ -18,28 +21,45 @@
             <ProductCard product="@product" />
         }
     </div>
-    <Pagination currentPage="@currentPage" totalPages="@totalPages" />
+    <Pagination currentPage="@configList.PageNumber" totalPages="@configList.TotalCount" />
 
 </div>
 
 
 @code {
-    private int currentPage = 1;
-    private int totalPages = 7;
+    private ListConfigModel configList;
     private List<ProductModel> products = new();
 
     private List<IDropdownOptions> Categories = new();
+    private List<IDropdownOptions> PriceSortOrders = new();
+
+    private void LoadProducts()
+    {
+        products = ProductService.GetProducts(
+            searchTerm: configList.SearchTerm ?? "",
+            category: configList.Category,
+            sortOrder: configList.SortOrder,
+            pageNumber: configList.PageNumber,
+            pageSize: configList.PageSize); 
+    }
+
+
+    private void HandleSearch(string term)
+    {
+        Console.WriteLine(term);
+
+        configList.SearchTerm = term;
+        configList.PageNumber = 1;        
+        LoadProducts();
+    }
 
     protected override void OnInitialized()
     {
-        products = ProductService.GetProducts(
-            searchTerm: null,
-            category: null,
-            sortOrder: SortModelEnum.ASC,
-            pageNumber: 1,
-            pageSize: 10);
-
+        configList = ProductService.GetConfigList();
+        PriceSortOrders = ProductService.GetPriceSortOptions().Cast<IDropdownOptions>()
+            .ToList();
         Categories = ProductService.GetCategories().Cast<IDropdownOptions>()
             .ToList();
+        LoadProducts();
     }
 }
