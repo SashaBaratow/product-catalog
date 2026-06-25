@@ -1,10 +1,15 @@
 using productCotalog.Components;
+using productCotalog.Services;
+using productCotalog.Store;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddSingleton<ProductStore>();
+builder.Services.AddScoped<ProductService>();
 
 var app = builder.Build();
 
