@@ -1,0 +1,15 @@
+﻿@using productCotalog.Models;
+
+<div class="card p-0" style="width: 18rem;">
+    <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
+    <div class="card-body">
+        <h5 class="card-title">@product.Name</h5>
+        <p class="card-text">@product.Description</p>
+        <a href="/products/@product.Id" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>
+
+@code {
+    [Parameter] public ProductModel product { get; set; } = new ProductModel();
+
+}
