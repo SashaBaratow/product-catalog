@@ -1,5 +1,6 @@
 ﻿using productCotalog.Models;
 using productCotalog.Store;
+using productCotalog.Utils;
 
 namespace productCotalog.Services
 {
@@ -7,21 +8,33 @@ namespace productCotalog.Services
     {
         private readonly ProductStore productStore;
         public List<ProductModel> productList;
-        public ProductService(ProductStore store)  
+        public ListConfigModel listConfigs { get; set; }
+
+        public ProductService(ProductStore store, ListConfigModel config)  
         {
             productStore = store;
             productList = productStore.productList;
+            listConfigs = config;
         }
 
         public List<FilterCategory> GetCategories()
         {
             return productStore.categories;
         }
+        public List<PriceModel> GetPriceSortOptions()
+        {
+            return Enum.GetValues(typeof(PriceModelEnum)).Cast<PriceModelEnum>().Select(v => new PriceModel { Value = v, DisplayName = v.GetDisplayName() }).ToList();
+        }
 
+
+        public ListConfigModel GetConfigList()
+        {
+            return listConfigs;
+        }
         public List<ProductModel> GetProducts(
         string? searchTerm,
         CategoryEnum? category,
-        SortModelEnum sortOrder,
+        PriceModelEnum sortOrder,
         int pageNumber,
         int pageSize)
         {
@@ -41,8 +54,8 @@ namespace productCotalog.Services
             
             query = sortOrder switch
             {
-                SortModelEnum.ASC => query.OrderBy(p => p.Price),
-                SortModelEnum.DESC => query.OrderByDescending(p => p.Price),
+                PriceModelEnum.ASC => query.OrderBy(p => p.Price),
+                PriceModelEnum.DESC => query.OrderByDescending(p => p.Price),
                 _ => query
             };
 
