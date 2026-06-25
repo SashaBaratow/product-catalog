@@ -1,4 +1,6 @@
-﻿namespace productCotalog.Models
+﻿using productCotalog.Interfaces;
+
+namespace productCotalog.Models
 {
     public class ProductModel
     {
@@ -25,9 +27,10 @@
         [System.ComponentModel.DataAnnotations.Display(Name = "Игрушки")]
         TOYS
     }
-    public class FilterCategory
+    public class FilterCategory :  IDropdownOptions
     {
         public CategoryEnum Value { get; init; }
         public string DisplayName { get; init; } = string.Empty;
+        object IDropdownOptions.Value => Value;
     }
 }
