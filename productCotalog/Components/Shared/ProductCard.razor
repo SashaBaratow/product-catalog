@@ -1,13 +1,18 @@
 ﻿@using productCotalog.Models;
+@using productCotalog.Utils
 
-<div class="card p-0" style="width: 18rem;">
-    <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
-    <div class="card-body">
-        <h5 class="card-title">@product.Name</h5>
-        <p class="card-text">@product.Description</p>
-        <a href="/products/@product.Id" class="btn btn-primary">Go somewhere</a>
+    <div class="card p-0 overflow-hidden" style="width: 18rem;">
+        <a class="image-link" href="products/@product.Id">
+            <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
+        </a>
+        <div class="card-body">
+            <h5 class="card-title">@product.Name</h5>
+            <p class="card-text">@product.Description</p>
+            <p class="product-card-category" title="Категория">@product.Category.GetDisplayName()</p>
+        </div> 
+        <img src="/click-off-bg.gif" class="card-gif-click" alt="click">
+
     </div>
-</div>
 
 @code {
     [Parameter] public ProductModel product { get; set; } = new ProductModel();
