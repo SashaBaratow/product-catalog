@@ -1,0 +1,40 @@
+﻿<nav aria-label="page-navigation">
+    <ul class="pagination">
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <button class="page-link" @onclick="PrevCallback" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </button>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active">
+            <a class="page-link" href="#" aria-current="page">@(currentPage)</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+            <button class="page-link" @onclick="NextCallback" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </button>
+        </li>
+    </ul>
+</nav>
+
+@code {
+    [Parameter] public int currentPage { get; set; } = 1;
+    [Parameter] public int totalPages { get; set; } = 1;
+
+    private void NextCallback()
+    {
+        if (currentPage < totalPages)
+        {
+            currentPage++;
+        }
+    }
+    private void PrevCallback()
+    {
+        if (currentPage > 1)
+        {
+            currentPage--;
+        }
+    }
+}
+
