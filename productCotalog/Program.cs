@@ -9,6 +9,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddSingleton<ProductStore>();
+builder.Services.AddScoped<ListConfigModel>();
 builder.Services.AddScoped<ProductService>();
 
 var app = builder.Build();
