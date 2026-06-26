@@ -5,6 +5,7 @@
 @using productCotalog.Models
 @using productCotalog.Interfaces
 @inject ProductService ProductService
+@inject CartService CartService
 @rendermode InteractiveServer
 
 <PageTitle>Products</PageTitle>
@@ -18,7 +19,7 @@
     <div class="row row-cols-4 gap-4 justify-content-center">
         @foreach (var product in products)
         {
-            <ProductCard product="@product" />
+            <ProductCard product="@product" onAddToCart="HandleAddToCart" />
         }
     </div>
     <Pagination currentPage="@configList.PageNumber" totalPages="@configList.TotalPages" onChange="HandlePageChange" />
@@ -33,6 +34,7 @@
     private List<IDropdownOptions> Categories = new();
     private List<IDropdownOptions> PriceSortOrders = new();
 
+   
     private void LoadProducts()
     {
         products = ProductService.GetProducts(
@@ -41,6 +43,10 @@
             sortOrder: configList.SortOrder,
             pageNumber: configList.PageNumber,
             pageSize: configList.PageSize); 
+    }
+    private void HandleAddToCart(ProductModel product)
+    {
+        CartService.AddCart(product);
     }
     private void HandlePriceSort(PriceModelEnum? sortOrder)
     {

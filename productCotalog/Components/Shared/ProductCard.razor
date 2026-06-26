@@ -12,12 +12,45 @@
             <p class="card-price">@product.Price.ToString("C")</p>
         </div> 
         <img src="/click-off-bg.gif" class="card-gif-click" alt="click">
-        <button class="card-cart">
-            <img src="/cart.svg" alt="click">
-        </button>
-    </div>
+    @if (onAddToCart.HasDelegate && !onDeleteFromCart.HasDelegate)
+        {
+        <button @onclick="HandleAddToCart" class="card-cart-position card-cart-btn">
+                <img src="/cart.svg" alt="click">
+        </button>                
+        }
+    @if (!onAddToCart.HasDelegate && onDeleteFromCart.HasDelegate && countInCart != null)
+    {
+        <div class="card-cart-position" style="display:flex; align-items: center;  gap:0.6rem;">
+            <button @onclick="HandleDeleteFromCart" class="card-cart-btn delete-btn">
+                <img src="/cart.svg" alt="click">
+            </button>
+            <p style="padding:0; margin:0;">@countInCart шт</p>
+        </div>
+    }
+</div>
 
 @code {
     [Parameter] public ProductModel product { get; set; } = new ProductModel();
+    [Parameter] public EventCallback<ProductModel> onAddToCart { get; set; }
+    [Parameter] public EventCallback<ProductModel> onDeleteFromCart { get; set; }
+    [Parameter] public int? countInCart { get; set; }
+
+    private void HandleDeleteFromCart()
+    {
+        if (onDeleteFromCart.HasDelegate)
+        {
+            onDeleteFromCart.InvokeAsync(product);
+        }
+    }
+
+    private void HandleAddToCart()
+    {
+        if (onAddToCart.HasDelegate)
+        {
+            onAddToCart.InvokeAsync(product);
+        }
+    }
+
+    
 
 }

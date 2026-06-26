@@ -1,7 +1,45 @@
 ﻿@page "/cart"
+@using productCotalog.Models
+@using productCotalog.Components.Shared
+@using productCotalog.Services
+@using productCotalog.Store
+@inject CartService CartService
+@rendermode InteractiveServer
 
 <PageTitle>Cart</PageTitle>
 
-<h1>Shopping Cart</h1>
+<h1 class="mb-4">Корзина товаров</h1>
+<div>
+    @if(cartList != null && cartList.Count > 0)
+    {
+       <div class="row row-cols-4 gap-4 justify-content-center flex-wrap">
+        @foreach (var item in cartList)
+        {
+                <ProductCard @key="item.product.Id"
+                             product="@item.product" 
+                             countInCart="@item.count"
+                             onDeleteFromCart="DeleteFromCart" />
+        }
+    </div>
+    }
+    else
+    {
+        <p>Корзина пустя</p>
+    }
+    
+</div>
 
-Welcome to your new app.
+@code{
+    public List<CartModel> cartList;
+    protected override void OnInitialized()
+    {
+        cartList = CartService.GetCartItems();
+    }
+    public void DeleteFromCart(ProductModel product)
+    {
+        CartService.DeleteCart(product);
+        StateHasChanged();
+    }
+   
+
+}
