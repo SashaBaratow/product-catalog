@@ -29,7 +29,6 @@ namespace productCotalog.Services
 
         public ListConfigModel GetConfigList()
         {
-            listConfigs.setTotalCount(productList.Count);
             return listConfigs;
         }
         public List<ProductModel> GetProducts(
@@ -63,6 +62,8 @@ namespace productCotalog.Services
   
             var filtered = query.ToList();
             var totalCount = filtered.Count;
+
+            listConfigs.setTotalCount(totalCount);
 
             var items = filtered
                 .Skip((pageNumber - 1) * pageSize)
