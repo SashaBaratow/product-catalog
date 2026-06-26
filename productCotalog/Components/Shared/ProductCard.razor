@@ -9,9 +9,9 @@
             <h5 class="card-title">@product.Name</h5>
             <p class="card-text">@product.Description</p>
             <p class="product-card-category" title="Категория">@product.Category.GetDisplayName()</p>
+            <p class="card-price">@product.Price.ToString("C")</p>
         </div> 
         <img src="/click-off-bg.gif" class="card-gif-click" alt="click">
-
     </div>
 
 @code {

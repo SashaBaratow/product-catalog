@@ -17,6 +17,12 @@
 .image-link {
     background: var(--white-color);
 }
+.card-price {
+    color: var(--muted-color);
+    font-weight: 300;
+    font-size: 0.9rem;
+    text-align: right;
+}
 .card-gif-click {
     pointer-events: none;
     width: 28px;
