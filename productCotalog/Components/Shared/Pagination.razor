@@ -1,15 +1,17 @@
-﻿<nav aria-label="page-navigation">
-    <ul class="pagination">
+﻿<nav aria-label="page-navigation" style="margin-top: 1.25rem;">
+    <ul class="pagination justify-content-center">
         <li class="page-item @(currentPage == 1 ? "disabled" : "")">
             <button class="page-link" @onclick="PrevCallback" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </button>
         </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active">
-            <a class="page-link" href="#" aria-current="page">@(currentPage)</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            var pageNumber = i;
+            <li class="page-item @(currentPage == pageNumber ? "active" : "")">
+                <button class="page-link" @onclick="@(() => GoToPage(pageNumber))">@pageNumber</button>
+            </li>
+        }
         <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
             <button class="page-link" @onclick="NextCallback" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
@@ -19,21 +21,34 @@
 </nav>
 
 @code {
-    [Parameter] public int currentPage { get; set; } = 1;
-    [Parameter] public int totalPages { get; set; } = 1;
+    [Parameter] public EventCallback<int> onChange { get; set; }
+    [Parameter] public int currentPage { get; set; }
+    [Parameter] public int totalPages { get; set; }
 
-    private void NextCallback()
+    private async Task NextCallback()
     {
         if (currentPage < totalPages)
         {
             currentPage++;
+            await onChange.InvokeAsync(currentPage);
         }
     }
-    private void PrevCallback()
+
+    private async Task PrevCallback()
     {
         if (currentPage > 1)
         {
             currentPage--;
+            await onChange.InvokeAsync(currentPage);
+        }
+    }
+
+    private async Task GoToPage(int page)
+    {
+        if (page >= 1 && page <= totalPages)
+        {
+            currentPage = page;
+            await onChange.InvokeAsync(currentPage);
         }
     }
 }

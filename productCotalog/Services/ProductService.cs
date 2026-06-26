@@ -29,6 +29,7 @@ namespace productCotalog.Services
 
         public ListConfigModel GetConfigList()
         {
+            listConfigs.setTotalCount(productList.Count);
             return listConfigs;
         }
         public List<ProductModel> GetProducts(

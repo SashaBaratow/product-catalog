@@ -9,23 +9,13 @@ namespace productCotalog.Store
         public CategoryEnum? Category { get; set; } = null;
         public PriceModelEnum? SortOrder { get; set; } = null;
         public int PageNumber { get; set; } = 1;
-        public int PageSize { get; set; } = 6;
+        public int PageSize { get; set; } = 8;
         public int TotalCount { get; set; } = 0;
         public int TotalPages => (int)Math.Ceiling((double)TotalCount / PageSize);
-
-        public void nextPage()
+        public int setTotalCount(int count)
         {
-            if (PageNumber < TotalPages)
-            {
-                PageNumber++;
-            }
-        }
-        public void previousPage()
-        {
-            if (PageNumber > 1)
-            {
-                PageNumber--;
-            }
+            TotalCount = count;
+            return TotalCount;
         }
     }
 }

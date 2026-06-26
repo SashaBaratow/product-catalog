@@ -21,7 +21,7 @@
             <ProductCard product="@product" />
         }
     </div>
-    <Pagination currentPage="@configList.PageNumber" totalPages="@configList.TotalCount" />
+    <Pagination currentPage="@configList.PageNumber" totalPages="@configList.TotalPages" onChange="HandlePageChange" />
 
 </div>
 
@@ -60,6 +60,11 @@
     {
         configList.SearchTerm = term;
         configList.PageNumber = 1;        
+        LoadProducts();
+    }
+    private void HandlePageChange(int pageNumber)
+    {
+        configList.PageNumber = pageNumber;
         LoadProducts();
     }
 
