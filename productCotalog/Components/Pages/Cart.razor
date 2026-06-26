@@ -41,6 +41,7 @@
     public void DeleteFromCart(ProductModel product)
     {
         CartService.DeleteCart(product);
+        totalCartItems = CartService.GetTotalItemsCount();
         StateHasChanged();
     }
    
