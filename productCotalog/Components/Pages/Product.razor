@@ -17,9 +17,16 @@
         <Select Options="@Categories" SelectedLabel="Все категории" TValue="CategoryEnum" OnSelect="HandleCategoryFilter" />
    </div>
     <div class="row row-cols-4 gap-4 justify-content-center">
-        @foreach (var product in products)
+        @if (products.Any())
         {
-            <ProductCard product="@product" onAddToCart="HandleAddToCart" />
+            @foreach (var product in products)
+            {
+                <ProductCard product="@product" onAddToCart="HandleAddToCart" />
+            }
+        }
+        else
+        {
+            <p class="text-center">В данный момент нет продуктов.</p>
         }
     </div>
     <Pagination currentPage="@configList.PageNumber" totalPages="@configList.TotalPages" onChange="HandlePageChange" />
