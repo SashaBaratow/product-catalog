@@ -12,8 +12,8 @@
 <div>
     <div class="d-flex align-items-start" style="gap: clamp(0.5rem,2vw,2rem);">
         <SearchInput OnSearch="HandleSearch" Value="@configList.SearchTerm" />
-        <Select Options="@PriceSortOrders" SelectedLabel="Все" />
-        <Select Options="@Categories" SelectedLabel="Все категории" />
+        <Select Options="@PriceSortOrders" SelectedLabel="Все" TValue="PriceModelEnum" OnSelect="HandlePriceSort"/>
+        <Select Options="@Categories" SelectedLabel="Все категории" TValue="CategoryEnum" OnSelect="HandleCategoryFilter" />
    </div>
     <div class="row row-cols-4 gap-4 justify-content-center">
         @foreach (var product in products)
@@ -42,12 +42,22 @@
             pageNumber: configList.PageNumber,
             pageSize: configList.PageSize); 
     }
+    private void HandlePriceSort(PriceModelEnum? sortOrder)
+    {
+        configList.SortOrder = sortOrder;
+        configList.PageNumber = 1;
+        LoadProducts();
+    }
+    private void HandleCategoryFilter(CategoryEnum? category)
+    {
+        configList.Category = category;
+        configList.PageNumber = 1;
+        LoadProducts();
+    }
 
 
     private void HandleSearch(string term)
     {
-        Console.WriteLine(term);
-
         configList.SearchTerm = term;
         configList.PageNumber = 1;        
         LoadProducts();

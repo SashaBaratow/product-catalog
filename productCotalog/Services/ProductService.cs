@@ -34,7 +34,7 @@ namespace productCotalog.Services
         public List<ProductModel> GetProducts(
         string? searchTerm,
         CategoryEnum? category,
-        PriceModelEnum sortOrder,
+        PriceModelEnum? sortOrder,
         int pageNumber,
         int pageSize)
         {
