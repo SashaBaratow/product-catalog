@@ -7,10 +7,16 @@ namespace productCotalog.Services
     {
         public List<CartModel> cartItems { get; set; }
         public int TotalItems;
+        public decimal TotalPrice;
+
 
         public void UpdateTotalItems()
         {
             TotalItems = cartItems.Sum(item => item.count);
+        }
+        public void CalculateTotalPrice()
+        {
+            TotalPrice = cartItems.Sum(item => item.product.Price * item.count);
         }
         public CartService(CartStore store)
         {
@@ -20,6 +26,11 @@ namespace productCotalog.Services
         public List<CartModel> GetCartItems()
         {
             return cartItems;
+        }
+
+        public decimal GetTotalPrice()
+        {
+            return TotalPrice;
         }
 
         public int GetTotalItemsCount()
@@ -38,6 +49,7 @@ namespace productCotalog.Services
                     cartItems.Remove(existing);
                 }
             }
+            CalculateTotalPrice();
             UpdateTotalItems();
         }
         public void AddCart(ProductModel product)
@@ -56,6 +68,7 @@ namespace productCotalog.Services
                     count = 1
                 });
             }
+            CalculateTotalPrice();
             UpdateTotalItems();
         }
     }
