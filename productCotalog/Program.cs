@@ -11,6 +11,8 @@ builder.Services.AddRazorComponents()
 builder.Services.AddSingleton<ProductStore>();
 builder.Services.AddScoped<ListConfigModel>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<CartStore>();
 
 var app = builder.Build();
 

@@ -1,0 +1,25 @@
+.product-title {
+    margin-bottom: 1.5rem;
+}
+.product-block {
+    display: flex;
+    gap:2rem;
+}
+.product-image {
+    border-radius: 1rem;
+}
+.product-description {
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+.product-price {
+    font-size: 1.5rem;
+    font-weight:700;
+}
+.product-category {
+    font-size: 1.1rem;
+    font-weight: 300;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--muted-color);
+    padding: 0.2rem 0.6rem;
+}

@@ -1,7 +1,8 @@
 ﻿@using productCotalog.Interfaces;
+@typeparam TValue where TValue : struct, Enum
 
-<select class="form-select" style="max-width: 10rem;" aria-label="@AriaLabel">
-    <option selected>@SelectedLabel</option>
+<select @onchange="@SelectHandler" class="form-select" style="max-width: 10rem;" aria-label="@AriaLabel">
+    <option value="">@SelectedLabel</option>
     @foreach (var option in Options)
     {
         <option value="@option.Value">@option.DisplayName</option>
@@ -9,7 +10,24 @@
 </select>
 
 @code{
+    [Parameter] public EventCallback<TValue?> OnSelect { get; set; }
     [Parameter] public string AriaLabel { get; set; } = "Select label";
     [Parameter] public string SelectedLabel { get; set; } = "Выберите категорию";
     [Parameter] public List<IDropdownOptions> Options { get; set; } = new List<IDropdownOptions>();
+    private async Task SelectHandler(ChangeEventArgs e)
+    {
+        var raw = e.Value?.ToString();
+        if (string.IsNullOrEmpty(raw))
+        {
+            await OnSelect.InvokeAsync(null);
+            return;
+        }
+
+        if (typeof(TValue).IsEnum)
+        {
+            var parsed = (TValue)Enum.Parse(typeof(TValue), raw);
+            await OnSelect.InvokeAsync(parsed);
+        }
+    }
+
 }

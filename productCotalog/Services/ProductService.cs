@@ -26,6 +26,10 @@ namespace productCotalog.Services
             return Enum.GetValues(typeof(PriceModelEnum)).Cast<PriceModelEnum>().Select(v => new PriceModel { Value = v, DisplayName = v.GetDisplayName() }).ToList();
         }
 
+        public ProductModel GetProductById(int id)
+        {
+            return productList.FirstOrDefault(p => p.Id == id);
+        }
 
         public ListConfigModel GetConfigList()
         {
@@ -34,7 +38,7 @@ namespace productCotalog.Services
         public List<ProductModel> GetProducts(
         string? searchTerm,
         CategoryEnum? category,
-        PriceModelEnum sortOrder,
+        PriceModelEnum? sortOrder,
         int pageNumber,
         int pageSize)
         {
@@ -62,6 +66,8 @@ namespace productCotalog.Services
   
             var filtered = query.ToList();
             var totalCount = filtered.Count;
+
+            listConfigs.setTotalCount(totalCount);
 
             var items = filtered
                 .Skip((pageNumber - 1) * pageSize)
