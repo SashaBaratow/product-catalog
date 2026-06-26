@@ -8,6 +8,13 @@
     --border-radius: 0.25rem;
     --border: 1px solid #6c757d;
 }
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 /*
 *,
 *::before,
@@ -39,10 +46,6 @@ li {
     padding: 0;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
 
 button {
     border: none;

@@ -1,0 +1,15 @@
+﻿@using productCotalog.Interfaces;
+
+<select class="form-select" style="max-width: 10rem;" aria-label="@AriaLabel">
+    <option selected>@SelectedLabel</option>
+    @foreach (var option in Options)
+    {
+        <option value="@option.Value">@option.DisplayName</option>
+    }
+</select>
+
+@code{
+    [Parameter] public string AriaLabel { get; set; } = "Select label";
+    [Parameter] public string SelectedLabel { get; set; } = "Выберите категорию";
+    [Parameter] public List<IDropdownOptions> Options { get; set; } = new List<IDropdownOptions>();
+}

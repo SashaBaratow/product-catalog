@@ -1,0 +1,24 @@
+﻿<div class="input-group mb-3">
+    <input value="@searchTerm"
+           @oninput="OnInput"
+           type="text" class="form-control" placeholder="Искать..."
+           aria-label="Поиск товара" />
+    <button @onclick="Search" class="btn btn-outline-secondary" type="button">Искать</button>
+</div>
+
+@code {
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string> OnSearch { get; set; }
+
+    private string searchTerm = "";
+
+    protected override void OnParametersSet()
+    {
+        searchTerm = Value ?? "";
+    }
+
+    private void OnInput(ChangeEventArgs e)
+        => searchTerm = e.Value?.ToString() ?? "";
+
+    private async Task Search() => await OnSearch.InvokeAsync(searchTerm);
+}

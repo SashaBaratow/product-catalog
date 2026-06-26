@@ -1,0 +1,32 @@
+/* CSS for ProductCard component */
+.product-card-category {
+    top: 0.5rem;
+    left: 0.5rem;
+    position: absolute;
+    display: inline-block;
+    font-size: 0.7rem;
+    border: 1px solid var(--dark-color);
+    border-radius: var(--border-radius);
+    padding: 0.2rem 0.4rem;
+    color: var(--dark-color);
+    pointer-events: none;
+}
+.card {
+    height: auto;
+}
+.image-link {
+    background: var(--white-color);
+}
+.card-gif-click {
+    pointer-events: none;
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+}
+.card .card-img-top:hover {
+    opacity: 0.4;
+    background: var(--dark-color);
+    transition: 0.5s;
+}
