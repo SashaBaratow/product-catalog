@@ -8,7 +8,7 @@
 
 <PageTitle>Cart</PageTitle>
 
-<h1 class="mb-4">Корзина товаров</h1>
+<h1 class="mb-4">Корзина товаров <span class="badge bg-primary">@totalCartItems</span></h1>
 <div>
     @if(cartList != null && cartList.Count > 0)
     {
@@ -31,9 +31,12 @@
 
 @code{
     public List<CartModel> cartList;
+    public int totalCartItems;
+
     protected override void OnInitialized()
     {
         cartList = CartService.GetCartItems();
+        totalCartItems = CartService.GetTotalItemsCount();
     }
     public void DeleteFromCart(ProductModel product)
     {

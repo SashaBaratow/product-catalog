@@ -8,15 +8,23 @@ namespace productCotalog.Services
         public List<CartModel> cartItems { get; set; }
         public int TotalItems;
 
+        public void UpdateTotalItems()
+        {
+            TotalItems = cartItems.Sum(item => item.count);
+        }
         public CartService(CartStore store)
         {
             cartItems = store.Items;
-            TotalItems = store.TotalItems;
         }
 
         public List<CartModel> GetCartItems()
         {
             return cartItems;
+        }
+
+        public int GetTotalItemsCount()
+        {
+            return TotalItems;  
         }
 
         public void DeleteCart(ProductModel product)
@@ -30,6 +38,7 @@ namespace productCotalog.Services
                     cartItems.Remove(existing);
                 }
             }
+            UpdateTotalItems();
         }
         public void AddCart(ProductModel product)
         {
@@ -47,6 +56,7 @@ namespace productCotalog.Services
                     count = 1
                 });
             }
+            UpdateTotalItems();
         }
     }
 }
