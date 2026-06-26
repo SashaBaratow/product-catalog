@@ -26,6 +26,10 @@ namespace productCotalog.Services
             return Enum.GetValues(typeof(PriceModelEnum)).Cast<PriceModelEnum>().Select(v => new PriceModel { Value = v, DisplayName = v.GetDisplayName() }).ToList();
         }
 
+        public ProductModel GetProductById(int id)
+        {
+            return productList.FirstOrDefault(p => p.Id == id);
+        }
 
         public ListConfigModel GetConfigList()
         {

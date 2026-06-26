@@ -1,0 +1,36 @@
+﻿@page "/products/{Id:int}"
+@using productCotalog.Models
+@using productCotalog.Services
+@inject ProductService ProductService
+@rendermode InteractiveServer
+@using productCotalog.Utils
+
+<PageTitle>@(product?.Name ?? "Product")</PageTitle>
+
+@if (product is null)
+{
+    <p class="mx-auto">Загрузка...</p>
+}
+else
+{
+   <h1 class="product-title">@product.Name</h1>
+    <div class="product-block">
+        <img src="@product.ImageUrl" class="product-image" alt="@product.Name">
+        <div class="product-body">
+            <p   class="product-description">@product.Description</p>
+            <p class="product-price">@product.Price.ToString("C")</p>
+            <span class="product-category">@product.Category.GetDisplayName()</span>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+
+    private ProductModel? product;
+
+    protected override void OnInitialized()
+    {
+        product = ProductService.GetProductById(Id);
+    }
+}
